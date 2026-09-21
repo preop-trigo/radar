@@ -436,12 +436,18 @@ else:
         bloco_marca = filtrado[filtrado["Marca"] == marca].copy()
         qtd_alto = int((bloco_marca["Risco"] == "🔴 ALTO RISCO").sum())
         qtd_medio = int((bloco_marca["Risco"] == "🟡 MÉDIO RISCO").sum())
+        qtd_baixo = int((bloco_marca["Risco"] == "🟢 BAIXO RISCO").sum())
+        qtd_sem_risco = int((bloco_marca["Risco"] == "⚪ SEM RISCO INFORMADO").sum())
 
         titulo = f"{marca}  •  {len(bloco_marca)} unidade(s)"
         if qtd_alto:
             titulo += f"  •  🔴 {qtd_alto}"
         if qtd_medio:
             titulo += f"  •  🟡 {qtd_medio}"
+        if qtd_baixo:
+            titulo += f"  •  🟢 {qtd_baixo}"
+        if qtd_sem_risco:
+            titulo += f"  •  ⚪ {qtd_sem_risco}"
 
         with st.expander(titulo, expanded=abrir_marca):
             tipos_presentes = bloco_marca["Tipo de Projeto"].drop_duplicates().tolist()
@@ -479,3 +485,4 @@ st.caption(
     "Colunas utilizadas da aba Geral: J = Marca | B = Data prevista | L = Tipo de projeto | "
     "K = Restaurante | U = Comentários | V = Farol riscos. A coluna A é usada apenas para manter Status = PREVISTO."
 )
+
